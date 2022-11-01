@@ -1,9 +1,6 @@
 const Course = ({ course }) => {
-  const computeSum = () => {
-    return course.parts.reduce((sum, value) => {
-      return sum + value.exercises;
-    }, 0);
-  };
+  const computeSum = () =>
+    course.parts.reduce((sum, value) => sum + value.exercises, 0);
 
   return (
     <div>
