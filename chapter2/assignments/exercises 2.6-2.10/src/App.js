@@ -1,14 +1,13 @@
 import { useState } from "react";
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: "9498121193" },
+  ]);
   const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
 
-  const handleNameChange = (event) => {
-    setNewName(event.target.value);
-  };
-
-  const addName = (event) => {
+  const addInfo = (event) => {
     event.preventDefault();
 
     for (let i = 0; i < persons.length; i++) {
@@ -18,21 +17,33 @@ const App = () => {
       }
     }
 
-    const newNameEntry = {
+    const newPersonEntry = {
       name: newName,
+      number: newNumber,
       id: persons.name,
     };
-    setPersons(persons.concat(newNameEntry));
+    setPersons(persons.concat(newPersonEntry));
     setNewName("");
-    console.log(persons);
+    setNewNumber("");
+  };
+
+  const handleNameChange = (event) => {
+    setNewName(event.target.value);
+  };
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value);
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
+      <form onSubmit={addInfo}>
         <div>
           name: <input onChange={handleNameChange} value={newName} />
+        </div>
+        <div>
+          number: <input onChange={handleNumberChange} value={newNumber} />
         </div>
         <div>
           <button type="submit">add</button>
@@ -40,7 +51,11 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {persons.map((person) => {
-        return <div key={person.name}>{person.name}</div>;
+        return (
+          <div key={person.name}>
+            {person.name} {person.number}
+          </div>
+        );
       })}
     </div>
   );
