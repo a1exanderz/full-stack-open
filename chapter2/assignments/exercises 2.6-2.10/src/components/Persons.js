@@ -1,4 +1,4 @@
-const DisplayNumbersByNameFilter = ({ persons, newFilter }) => {
+const Persons = ({ persons, newFilter }) => {
   return persons
     .filter((person) =>
       person.name.toLowerCase().includes(newFilter.toLowerCase())
@@ -12,4 +12,4 @@ const DisplayNumbersByNameFilter = ({ persons, newFilter }) => {
     });
 };
 
-export default DisplayNumbersByNameFilter;
+export default Persons;

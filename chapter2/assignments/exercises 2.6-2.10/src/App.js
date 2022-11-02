@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DisplayNumbersByNameFilter from "./components/DisplayNumbersByNameFilter";
+import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 
@@ -54,7 +54,7 @@ const App = () => {
         newNumber={newNumber}
       />
       <h2>Numbers</h2>
-      <DisplayNumbersByNameFilter persons={persons} newFilter={newFilter} />
+      <Persons persons={persons} newFilter={newFilter} />
     </div>
   );
 };
