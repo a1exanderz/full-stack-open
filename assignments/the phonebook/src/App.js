@@ -27,9 +27,12 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1,
     };
-    setPersons(persons.concat(newPersonEntry));
-    setNewName("");
-    setNewNumber("");
+
+    personService.create(newPersonEntry).then((returnedNote) => {
+      setPersons(persons.concat(returnedNote));
+      setNewName("");
+      setNewNumber("");
+    });
   };
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -54,7 +57,12 @@ const App = () => {
         newNumber={newNumber}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} newFilter={newFilter} />
+      <Persons
+        persons={persons}
+        newFilter={newFilter}
+        deleteEntry={personService.deleteEntry}
+        setPersons={setPersons}
+      />
     </div>
   );
 };
