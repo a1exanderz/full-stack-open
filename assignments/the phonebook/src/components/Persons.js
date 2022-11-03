@@ -9,8 +9,10 @@ const Persons = ({ persons, newFilter, deleteEntry, setPersons }) => {
           {person.name} {person.number}{" "}
           <button
             onClick={() => {
-              deleteEntry(person.id);
-              setPersons(persons.filter((orig) => orig.id !== person.id));
+              if (window.confirm(`Delete ${person.name}?`)) {
+                deleteEntry(person.id);
+                setPersons(persons.filter((orig) => orig.id !== person.id));
+              }
             }}
           >
             delete

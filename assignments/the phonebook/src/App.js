@@ -18,8 +18,23 @@ const App = () => {
     event.preventDefault();
     for (let i = 0; i < persons.length; i++) {
       if (persons[i].name === newName) {
-        alert(`${newName} is already added to phonebook`);
-        return;
+        const updatedEntry = {
+          name: persons[i].name,
+          number: newNumber,
+          id: persons[i].id,
+        };
+        if (
+          window.confirm(
+            `${newName} is already added to phonebook, replace old number with new one?`
+          )
+        ) {
+          personService.update(persons[i].id, updatedEntry);
+          persons.splice(i, 1, updatedEntry);
+          setPersons(persons);
+          setNewName("");
+          setNewNumber("");
+          return;
+        }
       }
     }
     const newPersonEntry = {
