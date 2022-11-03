@@ -27,29 +27,48 @@ function App() {
     if (countryFilterList.length > 10) {
       return "Too many matches, specify another filter";
     } else if (countryFilterList.length > 1) {
-      return countryFilterList.map((country) => {
-        return <div key={country.name.common}>{country.name.common}</div>;
-      });
+      return countryFilterList.map((country) => (
+        <div key={country.name.common}>
+          <HandleDisplayInfoButton country={country} />
+        </div>
+      ));
     } else if (countryFilterList.length == 1) {
-      return countryFilterList.map((country) => {
-        return (
-          <div key={country.name.common}>
-            <h1>{country.name.common}</h1>
-            <div>capital {country.capital}</div>
-            <div>area {country.area}</div>
-            <h4>languages:</h4>
-            <ul>
-              {Object.values(country.languages).map((value) => (
-                <li key={value}>{value}</li>
-              ))}
-            </ul>
-            <div style={{}}>{country.flag}</div>
-          </div>
-        );
-      });
+      return <DisplaySingleCountryInfo countryInfo={countryFilterList} />;
     } else {
       return "No countries found";
     }
+  };
+
+  const HandleDisplayInfoButton = ({ country }) => {
+    const [displayInfo, setDisplayInfo] = useState(false);
+    return (
+      <div>
+        {country.name.common}{" "}
+        <button onClick={() => setDisplayInfo(!displayInfo)}>show</button>
+        {displayInfo ? (
+          <DisplaySingleCountryInfo countryInfo={[country]} />
+        ) : null}
+      </div>
+    );
+  };
+
+  const DisplaySingleCountryInfo = ({ countryInfo }) => {
+    return countryInfo.map((country) => {
+      return (
+        <div key={country.name.common}>
+          <h1>{country.name.common}</h1>
+          <div>capital {country.capital}</div>
+          <div>area {country.area}</div>
+          <h4>languages:</h4>
+          <ul>
+            {Object.values(country.languages).map((value) => (
+              <li key={value}>{value}</li>
+            ))}
+          </ul>
+          <div style={{}}>{country.flag}</div>
+        </div>
+      );
+    });
   };
 
   return (
