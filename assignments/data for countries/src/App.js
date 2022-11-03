@@ -53,6 +53,20 @@ function App() {
   };
 
   const DisplaySingleCountryInfo = ({ countryInfo }) => {
+    const lat = countryInfo[0].latlng[0];
+    const lng = countryInfo[0].latlng[1];
+    const apiKey = process.env.REACT_APP_API_KEY;
+
+    const [weather, setWeather] = useState([]);
+
+    useEffect(() => {
+      axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${apiKey}&units=metric`
+        )
+        .then((response) => setWeather(response.data));
+    }, []);
+
     return countryInfo.map((country) => {
       return (
         <div key={country.name.common}>
@@ -65,7 +79,14 @@ function App() {
               <li key={value}>{value}</li>
             ))}
           </ul>
-          <div style={{}}>{country.flag}</div>
+          <div>{country.flag}</div>
+          <h2>Weather in {country.name.common}</h2>
+          <div>temperature {weather.main?.temp} C</div>
+          <img
+            src={`https://openweathermap.org/img/wn/${weather.weather?.[0].icon}@2x.png`}
+          />
+          <div>wind {weather.wind?.speed} m/s</div>
+          <br />
         </div>
       );
     });
