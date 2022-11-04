@@ -1,4 +1,10 @@
-const Persons = ({ persons, newFilter, deleteEntry, setPersons }) => {
+const Persons = ({
+  persons,
+  newFilter,
+  deleteEntry,
+  setPersons,
+  setMessageContent,
+}) => {
   return persons
     .filter((person) =>
       person.name.toLowerCase().includes(newFilter.toLowerCase())
@@ -11,6 +17,13 @@ const Persons = ({ persons, newFilter, deleteEntry, setPersons }) => {
             onClick={() => {
               if (window.confirm(`Delete ${person.name}?`)) {
                 deleteEntry(person.id);
+                setMessageContent({
+                  action: "delete",
+                  name: person.name,
+                });
+                setTimeout(() => {
+                  setMessageContent(null);
+                }, 2000);
                 setPersons(persons.filter((orig) => orig.id !== person.id));
               }
             }}
