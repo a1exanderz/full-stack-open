@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+
 let persons = [
   {
     id: 1,
@@ -24,6 +26,7 @@ let persons = [
   },
 ];
 
+// GET REQUESTS
 app.get("/", (request, response) => {
   response.send("<h1>Title Page</h1>");
 });
@@ -50,11 +53,33 @@ app.get("/api/persons/:id", (request, response) => {
   }
 });
 
+// DELETE REQUESTS
 app.delete("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id);
   persons = persons.filter((person) => person.id !== id);
 
   response.status(204).end();
+});
+
+// POST REQUESTS
+app.post("/api/persons", (request, response) => {
+  const body = request.body;
+
+  if (!body) {
+    return response.status(400).json({
+      error: "content missing",
+    });
+  }
+
+  const person = {
+    id: Math.round(Math.random() * 100000),
+    name: body.name,
+    number: body.number,
+  };
+
+  persons = persons.concat(person);
+
+  response.json(person);
 });
 
 const PORT = 3001;
