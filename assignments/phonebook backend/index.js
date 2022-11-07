@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 
-app.use(express.json());
-
 let persons = [
   {
     id: 1,
@@ -25,6 +23,13 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
+
+// Middleware - Morgan
+let logger = require("morgan");
+
+app.use(logger("tiny"));
+
+app.use(express.json());
 
 // GET REQUESTS
 app.get("/", (request, response) => {
