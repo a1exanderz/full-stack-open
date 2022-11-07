@@ -1,0 +1,8 @@
+###
+POST /api/notes
+Content-Type: application/json
+
+{
+    "content": "lol",
+    "important": false
+}
