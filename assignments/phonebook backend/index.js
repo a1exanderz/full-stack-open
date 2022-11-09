@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 let persons = [
   {
@@ -34,6 +35,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cors()); // for frontend use to bypass CORS
 
 // GET REQUESTS
 app.get("/", (request, response) => {
@@ -103,6 +105,8 @@ app.post("/api/persons", (request, response) => {
   response.json(person);
 });
 
-const PORT = 3001;
-app.listen(PORT);
-console.log(`Server is running on ${PORT}`);
+const PORT = process.env.PORT || 3001;
+// Necessary to define environment before deploying on Fly.io
+app.listen(PORT, () => {
+  console.log(`Server is running on ${PORT}`);
+});
