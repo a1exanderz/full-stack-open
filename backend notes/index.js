@@ -12,13 +12,10 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
-app.use(express.json());
-
-app.use(requestLogger);
-
-app.use(cors());
-
 app.use(express.static("build"));
+app.use(express.json());
+app.use(requestLogger);
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("<h1>Hello World!</h1>");
@@ -65,9 +62,7 @@ app.get("/api/notes/:id", (request, response, next) => {
         response.status(404).end();
       }
     })
-    .catch((error) => {
-      next(error);
-    });
+    .catch((error) => next(error));
 });
 
 app.put("/api/notes/:id", (request, response, next) => {

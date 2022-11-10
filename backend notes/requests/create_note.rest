@@ -1,7 +1,2 @@
-post http://localhost:3001/api/notes
+DELETE http://localhost:3001/api/notes/636c4fa53f791891fe7684a8
 Content-Type:  application/json
-
-{
-    "content": "VS Code REST client",
-    "important": true
-}
