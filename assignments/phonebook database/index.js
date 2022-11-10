@@ -24,13 +24,6 @@ app.get("/", (request, response) => {
   response.send("<h1>Title Page</h1>");
 });
 
-// app.get("/info", (request, response) => {
-//   response.send(
-//     `<div>Phonebook has info for ${persons.length} people</div>
-//     <p>${Date()}</p>`
-//   );
-// });
-
 app.get("/api/persons", (request, response) => {
   Person.find({}).then((person) => {
     response.json(person);
@@ -45,10 +38,9 @@ app.get("/api/persons/:id", (request, response) => {
 
 // DELETE REQUESTS
 app.delete("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id);
-  persons = persons.filter((person) => person.id !== id);
-
-  response.status(204).end();
+  Person.findByIdAndRemove(request.params.id).then((result) => {
+    response.status(204).end();
+  });
 });
 
 // POST REQUESTS
@@ -56,15 +48,7 @@ app.post("/api/persons", (request, response) => {
   const body = request.body;
 
   if (!body.name) {
-    return response.status(400).json({
-      error: "name missing",
-    });
-  }
-
-  if (!body.number) {
-    return response.status(400).json({
-      error: "number missing",
-    });
+    return response.status(400).json({ error: "content missing" });
   }
 
   const person = new Person({
