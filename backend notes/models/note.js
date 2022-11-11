@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const url = `mongodb+srv://alexz648:<password>@fso-3c.0fojlrd.mongodb.net/?retryWrites=true&w=majority`;
+const url = `mongodb+srv://alexz648:alexz648@fso-3c.0fojlrd.mongodb.net/?retryWrites=true&w=majority`;
 
 console.log("connecting to", url);
 mongoose
@@ -13,8 +13,15 @@ mongoose
   });
 
 const noteSchema = new mongoose.Schema({
-  content: String,
-  date: Date,
+  content: {
+    type: String,
+    minLength: 5,
+    required: true,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
   important: Boolean,
 });
 
