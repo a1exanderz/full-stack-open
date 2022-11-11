@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const url = `mongodb+srv://alexz648:<password>@fso-3c.0fojlrd.mongodb.net/?retryWrites=true&w=majority`;
+const url = process.env.MONGODB_URI;
 
 console.log("connecting to", url);
 
@@ -14,8 +14,23 @@ mongoose
   });
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String,
+  name: {
+    type: String,
+    minLength: [
+      3,
+      "{VALUE} is not a valid name! Must be at least 3 characters.",
+    ],
+    required: true,
+  },
+  number: {
+    type: String,
+    validate: {
+      validator: function (v) {
+        return /^\d{8}$/g.test(v); // Must be 8 digits
+      },
+    },
+    required: true,
+  },
 });
 
 personSchema.set("toJSON", {
