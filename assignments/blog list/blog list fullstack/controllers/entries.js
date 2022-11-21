@@ -18,22 +18,18 @@ entriesRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-entriesRouter.post("/", (request, response, next) => {
-  const body = request.body;
+entriesRouter.post("/", async (request, response, next) => {
+  const body = await request.body;
 
   const entry = new Entry({
     title: body.title,
     author: body.author,
     url: body.url,
-    likes: body.likes,
+    likes: body.likes ? body.likes : 0,
   });
 
-  entry
-    .save()
-    .then((savedEntry) => {
-      response.json(savedEntry);
-    })
-    .catch((error) => next(error));
+  const savedEntry = await entry.save();
+  response.status(201).json(savedEntry);
 });
 
 entriesRouter.delete("/:id", (request, response, next) => {

@@ -4,6 +4,9 @@ const app = require("../app");
 
 const api = supertest(app);
 
+const Entry = require("../models/entry");
+const helper = require("./test_helper");
+
 test("blog entries are returned as json", async () => {
   await api
     .get("/api/blog-entries")
@@ -14,13 +17,52 @@ test("blog entries are returned as json", async () => {
 test("get returns correct number of blog posts", async () => {
   const response = await api.get("/api/blog-entries");
 
-  expect(response.body).toHaveLength(2);
+  expect(response.body).toHaveLength(helper.initialEntries.length);
 });
 
 test("blog identifier contains property name id", async () => {
   const response = await api.get("/api/blog-entries");
 
   expect(response.body[0].id).toBeDefined();
+});
+
+test("post request creates new blog post", async () => {
+  const newEntry = {
+    title: "test title",
+    author: "test author",
+    url: "test url",
+    likes: 99,
+  };
+
+  await api
+    .post("/api/blog-entries")
+    .send(newEntry)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const entriesAtEnd = await helper.entriesInDb();
+  expect(entriesAtEnd).toHaveLength(helper.initialEntries.length + 1);
+
+  const titles = entriesAtEnd.map((entry) => entry.title);
+  expect(titles).toContain("test title");
+});
+
+test("post likes missing defaults 0", async () => {
+  const newEntry = {
+    title: "new test no likes 2",
+    author: "author",
+    url: "url",
+  };
+
+  await api
+    .post("/api/blog-entries")
+    .send(newEntry)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const entriesAtEnd = await helper.entriesInDb();
+  const likes = entriesAtEnd[entriesAtEnd.length - 1];
+  expect(likes) === 0;
 });
 
 afterAll(() => {
