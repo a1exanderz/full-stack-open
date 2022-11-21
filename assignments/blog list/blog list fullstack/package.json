@@ -10,7 +10,7 @@
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
     "logs:prod": "fly logs",
-    "test": "NODE_ENV=production jest --verbose --runInBand"
+    "test": "NODE_ENV=production jest --verbose --runInBand --forceExit"
   },
   "author": "Alexander Zhang",
   "license": "MIT",

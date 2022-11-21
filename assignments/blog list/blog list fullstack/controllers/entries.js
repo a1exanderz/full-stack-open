@@ -1,10 +1,9 @@
 const entriesRouter = require("express").Router();
 const Entry = require("../models/entry");
 
-entriesRouter.get("/", (request, response) => {
-  Entry.find({}).then((entries) => {
-    response.json(entries);
-  });
+entriesRouter.get("/", async (request, response) => {
+  const entries = await Entry.find({});
+  response.json(entries);
 });
 
 entriesRouter.get("/:id", (request, response, next) => {
