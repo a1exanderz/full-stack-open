@@ -17,6 +17,12 @@ test("get returns correct number of blog posts", async () => {
   expect(response.body).toHaveLength(2);
 });
 
+test("blog identifier contains property name id", async () => {
+  const response = await api.get("/api/blog-entries");
+
+  expect(response.body[0].id).toBeDefined();
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
