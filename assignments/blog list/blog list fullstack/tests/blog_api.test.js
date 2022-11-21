@@ -4,7 +4,6 @@ const app = require("../app");
 
 const api = supertest(app);
 
-const Entry = require("../models/entry");
 const helper = require("./test_helper");
 
 test("blog entries are returned as json", async () => {
@@ -63,6 +62,24 @@ test("post likes missing defaults 0", async () => {
   const entriesAtEnd = await helper.entriesInDb();
   const likes = entriesAtEnd[entriesAtEnd.length - 1];
   expect(likes) === 0;
+});
+
+test("if title missing 400 response", async () => {
+  const newEntry = {
+    author: "test author",
+    url: "test url",
+  };
+
+  await api.post("/api/blog-entries").send(newEntry).expect(400);
+});
+
+test("if url missing 400 response", async () => {
+  const newEntry = {
+    title: "test title",
+    author: "test author",
+  };
+
+  await api.post("/api/blog-entries").send(newEntry).expect(400);
 });
 
 afterAll(() => {

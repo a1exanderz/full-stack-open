@@ -18,13 +18,13 @@ entriesRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-entriesRouter.post("/", async (request, response, next) => {
+entriesRouter.post("/", async (request, response) => {
   const body = await request.body;
 
   const entry = new Entry({
-    title: body.title,
+    title: body.title ? body.title : response.status(400).end(),
     author: body.author,
-    url: body.url,
+    url: body.url ? body.url : response.status(400).end(),
     likes: body.likes ? body.likes : 0,
   });
 
