@@ -6,16 +6,13 @@ entriesRouter.get("/", async (request, response) => {
   response.json(entries);
 });
 
-entriesRouter.get("/:id", (request, response, next) => {
-  Entry.findById(request.params.id)
-    .then((entry) => {
-      if (entry) {
-        response.json(entry);
-      } else {
-        response.status(404).end();
-      }
-    })
-    .catch((error) => next(error));
+entriesRouter.get("/:id", async (request, response, next) => {
+  const entry = await Entry.findById(request.params.id);
+  if (entry) {
+    response.json(entry);
+  } else {
+    response.status(404).end();
+  }
 });
 
 entriesRouter.post("/", async (request, response) => {
@@ -32,13 +29,13 @@ entriesRouter.post("/", async (request, response) => {
   response.status(201).json(savedEntry);
 });
 
-entriesRouter.delete("/:id", async (request, response, next) => {
+entriesRouter.delete("/:id", async (request, response) => {
   await Entry.findByIdAndRemove(request.params.id);
   response.status(204).end();
 });
 
-entriesRouter.put("/:id", (request, response, next) => {
-  const body = request.body;
+entriesRouter.put("/:id", async (request, response) => {
+  const body = await request.body;
 
   const entry = {
     title: body.title,
@@ -47,11 +44,11 @@ entriesRouter.put("/:id", (request, response, next) => {
     likes: body.likes,
   };
 
-  Entry.findByIdAndUpdate(request.params.id, entry, { new: true })
-    .then((updatedEntry) => {
-      response.json(updatedEntry);
-    })
-    .catch((error) => next(error));
+  const updatedEntry = await Entry.findByIdAndUpdate(request.params.id, entry, {
+    new: true,
+  });
+
+  response.json(updatedEntry);
 });
 
 module.exports = entriesRouter;

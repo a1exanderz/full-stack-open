@@ -91,6 +91,16 @@ test("delete request works", async () => {
   // expect(entriesAtEnd).toHaveLength(helper.initialEntries.length - 1);
 });
 
+test("put request works", async () => {
+  const putReqId = helper.initialEntries[0].id;
+
+  const newEntry = {
+    likes: 1,
+  };
+
+  await api.put(`/api/blog-entries/${putReqId}`).send(newEntry).expect(200);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
