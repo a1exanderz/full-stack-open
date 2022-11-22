@@ -82,6 +82,15 @@ test("if url missing 400 response", async () => {
   await api.post("/api/blog-entries").send(newEntry).expect(400);
 });
 
+test("delete request works", async () => {
+  const deleteId = helper.initialEntries[helper.initialEntries.length - 1].id;
+
+  await api.delete(`/api/blog-entries/${deleteId}`).expect(204);
+
+  // const entriesAtEnd = await helper.entriesInDb();
+  // expect(entriesAtEnd).toHaveLength(helper.initialEntries.length - 1);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });

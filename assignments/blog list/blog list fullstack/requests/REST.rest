@@ -1,7 +1,1 @@
-POST http://localhost:3001/api/blog-entries/ HTTP/1.1
-content-type: application/json
-
-{
-    "content": "sample",
-    "important": true,
-}
+DELETE  http://localhost:3001/api/blog-entries/637c08cfab0b96159eb76e2a HTTP/1.1

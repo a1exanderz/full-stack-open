@@ -32,12 +32,9 @@ entriesRouter.post("/", async (request, response) => {
   response.status(201).json(savedEntry);
 });
 
-entriesRouter.delete("/:id", (request, response, next) => {
-  Entry.findByIdAndRemove(request.params.id)
-    .then((result) => {
-      response.status(204).end();
-    })
-    .catch((error) => next(error));
+entriesRouter.delete("/:id", async (request, response, next) => {
+  await Entry.findByIdAndRemove(request.params.id);
+  response.status(204).end();
 });
 
 entriesRouter.put("/:id", (request, response, next) => {
