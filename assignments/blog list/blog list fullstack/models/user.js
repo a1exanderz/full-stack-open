@@ -4,10 +4,10 @@ const userSchema = new mongoose.Schema({
   username: String,
   name: String,
   passwordHash: String,
-  notes: [
+  entries: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Entry",
     },
   ],
 });
