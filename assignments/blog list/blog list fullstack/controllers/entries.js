@@ -67,7 +67,7 @@ entriesRouter.delete("/:id", async (request, response) => {
   } else {
     response
       .status(401)
-      .json({ error: "cannot delete a note that isn't yours" });
+      .json({ error: "cannot delete a note that isn't yours!" });
   }
 });
 
