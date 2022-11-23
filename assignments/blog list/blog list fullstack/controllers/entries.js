@@ -54,8 +54,21 @@ entriesRouter.post("/", async (request, response) => {
 });
 
 entriesRouter.delete("/:id", async (request, response) => {
-  await Entry.findByIdAndRemove(request.params.id);
-  response.status(204).end();
+  const token = getTokenFrom(request);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: "token missing or invalid" });
+  }
+
+  const entry = await Entry.findById(request.params.id);
+  if (entry.user.toString() === decodedToken.id) {
+    await Entry.findByIdAndRemove(request.params.id);
+    response.status(204).end();
+  } else {
+    response
+      .status(401)
+      .json({ error: "cannot delete a note that isn't yours" });
+  }
 });
 
 entriesRouter.put("/:id", async (request, response) => {

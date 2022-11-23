@@ -1,18 +1,13 @@
-POST http://localhost:3001/api/blog-entries
-Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsZXh6NjQ4MyIsImlkIjoiNjM3ZDZiYzQ2ZmE2Y2QwMzUyZGEyNjhjIiwiaWF0IjoxNjY5MTY0MzUxfQ.dDaK0HoY0l9akdjUjN-RsZnIq41jPpoe2rONlfpCJVk
-
-{
-    "title": "bbbbbbb",
-    "author": "bbbbbbb",
-    "url": "bbbbbbb"
-}
-
-# POST http://localhost:3001/api/login
+# POST http://localhost:3001/api/blog-entries
 # Content-Type: application/json
+# Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsZXh6NjQ4IiwiaWQiOiI2MzdkNjQyMTI4NDY4ZGQ3MzIyMmU5Y2UiLCJpYXQiOjE2NjkxNjU1NTZ9.Bkfnn_5SvfuV0s3ItwQ20WCIzeWJkDhDP6Q6ejQXtXU
 
 # {
-#     "username": "alexz6483",
-#     "name": "alexxx",
-#     "password": "alexz648"
+#     "title": "temp",
+#     "author": "temp",
+#     "url": "temp"
 # }
+
+DELETE http://localhost:3001/api/blog-entries/637d73b4622e76f19eae6473
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsZXh6NjQ4IiwiaWQiOiI2MzdkNjQyMTI4NDY4ZGQ3MzIyMmU5Y2UiLCJpYXQiOjE2NjkxNjU1NTZ9.Bkfnn_5SvfuV0s3ItwQ20WCIzeWJkDhDP6Q6ejQXtXU
