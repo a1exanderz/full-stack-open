@@ -1,1 +1,8 @@
-DELETE  http://localhost:3001/api/blog-entries/637c08cfab0b96159eb76e2a HTTP/1.1
+POST http://localhost:3001/api/users/
+Content-Type: application/json
+
+{
+    "username": "alexz648",
+    "name": "alexz648",
+    "password": "alexz648"
+}
