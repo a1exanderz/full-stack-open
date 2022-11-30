@@ -5,6 +5,8 @@ import loginService from "./services/login";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
+  const [notification, setNotification] = useState();
+  const [errorMessage, setErrorMessage] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -22,6 +24,20 @@ const App = () => {
     }
   }, []);
 
+  const ErrorMessage = ({ message }) => {
+    if (!message) {
+      return;
+    }
+    return <div className="error">{message}</div>;
+  };
+
+  const Notification = ({ message }) => {
+    if (!message) {
+      return;
+    }
+    return <div className="notif">{message}</div>;
+  };
+
   const addBlogEntry = (event) => {
     event.preventDefault();
 
@@ -35,6 +51,11 @@ const App = () => {
     blogService.create(newBlogEntry).then((returnedEntry) => {
       setBlogs(blogs.concat(returnedEntry));
     });
+
+    setNotification(`added ${newBlogEntry.title}, by ${newBlogEntry.author}`);
+    setTimeout(() => {
+      setNotification(null);
+    }, 5000);
   };
 
   const handleLogin = async (event) => {
@@ -51,7 +72,10 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (exception) {
-      console.log("Wrong credentials");
+      setErrorMessage("Wrong credentials");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
     }
   };
 
@@ -116,15 +140,22 @@ const App = () => {
     </div>
   );
 
-  return user === null ? (
-    loginForm()
-  ) : (
+  return (
     <div>
-      <p>
-        {user.name} is logged in <button onClick={handleLogout}>log out</button>
-      </p>
-      {blogList()}
-      {blogEntryForm()}
+      <ErrorMessage message={errorMessage} />
+      {user === null ? (
+        loginForm()
+      ) : (
+        <div>
+          <p>
+            {user.name} is logged in{" "}
+            <button onClick={handleLogout}>log out</button>
+          </p>
+          <Notification message={notification} />
+          {blogList()}
+          {blogEntryForm()}
+        </div>
+      )}
     </div>
   );
 };
