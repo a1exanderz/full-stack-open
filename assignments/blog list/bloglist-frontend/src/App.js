@@ -22,6 +22,21 @@ const App = () => {
     }
   }, []);
 
+  const addBlogEntry = (event) => {
+    event.preventDefault();
+
+    const newBlogEntry = {
+      title: event.target[0].value,
+      author: event.target[1].value,
+      url: event.target[2].value,
+      likes: event.target[3].value,
+    };
+
+    blogService.create(newBlogEntry).then((returnedEntry) => {
+      setBlogs(blogs.concat(returnedEntry));
+    });
+  };
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -79,6 +94,28 @@ const App = () => {
     </div>
   );
 
+  const blogEntryForm = () => (
+    <div>
+      <form onSubmit={addBlogEntry}>
+        <h2>create new</h2>
+        <div>
+          title <input />
+        </div>
+        <div>
+          author <input />
+        </div>
+        <div>
+          url <input />
+        </div>
+        <div>
+          likes <input />
+        </div>
+        <button type="submit">create</button>
+        <button type="reset">reset</button>
+      </form>
+    </div>
+  );
+
   return user === null ? (
     loginForm()
   ) : (
@@ -87,6 +124,7 @@ const App = () => {
         {user.name} is logged in <button onClick={handleLogout}>log out</button>
       </p>
       {blogList()}
+      {blogEntryForm()}
     </div>
   );
 };
