@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import Blog from "./components/Blog";
+
+import BlogList from "./components/BlogList";
+import BlogEntryForm from "./components/BlogEntryForm";
+import LoginForm from "./components/LoginForm";
+import Notification from "./components/Notification";
+import ErrorMessage from "./components/ErrorMessage";
+
+import Togglable from "./components/Togglable";
+
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
@@ -24,21 +32,7 @@ const App = () => {
     }
   }, []);
 
-  const ErrorMessage = ({ message }) => {
-    if (!message) {
-      return;
-    }
-    return <div className="error">{message}</div>;
-  };
-
-  const Notification = ({ message }) => {
-    if (!message) {
-      return;
-    }
-    return <div className="notif">{message}</div>;
-  };
-
-  const addBlogEntry = (event) => {
+  const handleBlogEntry = (event) => {
     event.preventDefault();
 
     const newBlogEntry = {
@@ -84,67 +78,17 @@ const App = () => {
     setUser(null);
   };
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <h2>log in to application</h2>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  );
-
-  const blogList = () => (
-    <div>
-      <h2>blogs</h2>
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
-    </div>
-  );
-
-  const blogEntryForm = () => (
-    <div>
-      <form onSubmit={addBlogEntry}>
-        <h2>create new</h2>
-        <div>
-          title <input />
-        </div>
-        <div>
-          author <input />
-        </div>
-        <div>
-          url <input />
-        </div>
-        <div>
-          likes <input />
-        </div>
-        <button type="submit">create</button>
-        <button type="reset">reset</button>
-      </form>
-    </div>
-  );
-
   return (
     <div>
       <ErrorMessage message={errorMessage} />
       {user === null ? (
-        loginForm()
+        <LoginForm
+          onSubmit={handleLogin}
+          username={username}
+          password={password}
+          setUsername={setUsername}
+          setPassword={setPassword}
+        />
       ) : (
         <div>
           <p>
@@ -152,8 +96,10 @@ const App = () => {
             <button onClick={handleLogout}>log out</button>
           </p>
           <Notification message={notification} />
-          {blogList()}
-          {blogEntryForm()}
+          <BlogList blogs={blogs} />
+          <Togglable buttonLabel="create a new note">
+            <BlogEntryForm onSubmit={handleBlogEntry} />
+          </Togglable>
         </div>
       )}
     </div>
