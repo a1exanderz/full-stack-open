@@ -97,7 +97,7 @@ const App = () => {
           </p>
           <Notification message={notification} />
           <BlogList blogs={blogs} />
-          <Togglable buttonLabel="create a new note">
+          <Togglable buttonLabel="create a new blog entry">
             <BlogEntryForm onSubmit={handleBlogEntry} />
           </Togglable>
         </div>
