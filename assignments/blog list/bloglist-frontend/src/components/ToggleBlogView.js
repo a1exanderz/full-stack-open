@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const ToggleBlogView = (props) => {
   const [visible, setVisible] = useState(false);
@@ -40,6 +41,10 @@ const ToggleBlogView = (props) => {
       </div>
     </div>
   );
+};
+
+ToggleBlogView.propTypes = {
+  buttonLabel: PropTypes.string.isRequired,
 };
 
 export default ToggleBlogView;
