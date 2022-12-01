@@ -25,9 +25,28 @@ const BlogList = ({ blogs, setBlogs, setErrorMessage }) => {
     }
   };
 
+  const sortByLikes = () => {
+    const sorted = blogs.sort((a, b) =>
+      a.likes > b.likes ? 1 : a.likes < b.likes ? -1 : 0
+    );
+    setBlogs([...sorted]);
+  };
+
   return (
     <div>
-      <h2>blogs</h2>
+      <div
+        style={{
+          display: "flex",
+          width: "300px",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h2>blogs</h2>{" "}
+        <button onClick={() => sortByLikes()} style={{ height: "21.5px" }}>
+          sort by likes
+        </button>
+      </div>
       {blogs.map((blog) => (
         <ToggleBlogView buttonLabel="view" key={blog.id}>
           <div
