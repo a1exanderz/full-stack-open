@@ -1,6 +1,6 @@
-const BlogEntryForm = ({ onSubmit }) => (
+const BlogEntryForm = ({ addBlogEntry }) => (
   <div>
-    <form onSubmit={onSubmit}>
+    <form onSubmit={addBlogEntry}>
       <h2>create new</h2>
       <div>
         title <input />
