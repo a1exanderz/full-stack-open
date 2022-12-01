@@ -96,7 +96,11 @@ const App = () => {
             <button onClick={handleLogout}>log out</button>
           </p>
           <Notification message={notification} />
-          <BlogList blogs={blogs} setBlogs={setBlogs} />
+          <BlogList
+            blogs={blogs}
+            setBlogs={setBlogs}
+            setErrorMessage={setErrorMessage}
+          />
           <Togglable buttonLabel="create a new blog entry">
             <BlogEntryForm onSubmit={handleBlogEntry} />
           </Togglable>

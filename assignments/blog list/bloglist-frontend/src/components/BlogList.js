@@ -1,12 +1,28 @@
 import ToggleBlogView from "./ToggleBlogView";
 import blogService from "../services/blogs";
 
-const BlogList = ({ blogs, setBlogs }) => {
+const BlogList = ({ blogs, setBlogs, setErrorMessage }) => {
   const handleLikeButton = async (id) => {
     const blog = blogs.find((blog) => blog.id === id);
     const updatedBlog = { ...blog, likes: blog.likes + 1 };
     const returnedBlog = await blogService.incrementLike(id, updatedBlog);
     setBlogs(blogs.map((blog) => (blog.id !== id ? blog : returnedBlog)));
+  };
+
+  const handleDeleteButton = async (id) => {
+    const blog = blogs.find((blog) => blog.id === id);
+    if (window.confirm(`Delete ${blog.title} by ${blog.author}?`)) {
+      try {
+        await blogService.deleteBlog(id);
+      } catch (exception) {
+        setErrorMessage("Cannot delete a note that isn't yours!");
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+        return;
+      }
+      setBlogs(blogs.filter((blog) => blog.id !== id));
+    }
   };
 
   return (
@@ -29,6 +45,7 @@ const BlogList = ({ blogs, setBlogs }) => {
               Likes: {blog.likes}{" "}
               <button onClick={() => handleLikeButton(blog.id)}>like</button>
             </div>
+            <button onClick={() => handleDeleteButton(blog.id)}>delete</button>
           </div>
         </ToggleBlogView>
       ))}
