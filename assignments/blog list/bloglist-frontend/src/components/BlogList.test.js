@@ -21,7 +21,26 @@ import BlogList from "./BlogList";
 //   expect(element).toBeDefined();
 // });
 
-test("renders url and likes when full entry shown", async () => {
+// test("renders url and likes when full entry shown", async () => {
+//   const blogs = [
+//     {
+//       title: "test title",
+//       author: "test author",
+//       url: "test url",
+//       likes: 0,
+//     },
+//   ];
+
+//   render(<BlogList blogs={blogs} />);
+
+//   const button = screen.getByText("view");
+//   userEvent.click(button);
+
+//   const element = screen.getAllByText("Likes: 0");
+//   expect(element).toBeDefined;
+// });
+
+test("full entry shown --> like button clicked twice, event handler received call twice", async () => {
   const blogs = [
     {
       title: "test title",
@@ -32,10 +51,13 @@ test("renders url and likes when full entry shown", async () => {
   ];
 
   render(<BlogList blogs={blogs} />);
+  const viewButton = screen.getByText("view");
+  userEvent.click(viewButton);
 
-  const button = screen.getByText("view");
-  userEvent.click(button);
+  const likeButton = screen.getByText("like");
+  userEvent.click(likeButton);
+  userEvent.click(likeButton);
 
-  const element = screen.getAllByText("Likes: 0");
+  const element = screen.getAllByText("Likes: 2");
   expect(element).toBeDefined;
 });
