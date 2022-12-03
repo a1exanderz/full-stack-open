@@ -9,7 +9,6 @@ const NoteForm = ({ createNote }) => {
 
   const addNote = (event) => {
     event.preventDefault();
-
     createNote({
       content: newNote,
       date: new Date().toISOString(),
@@ -19,7 +18,7 @@ const NoteForm = ({ createNote }) => {
   };
 
   return (
-    <div>
+    <div className="formDiv">
       <h2>Create a new note</h2>
 
       <form onSubmit={addNote}>
