@@ -44,11 +44,16 @@ describe("Blog app", function () {
       cy.get("#resetEntryButton");
       cy.contains("test title");
     });
-    it.only("a blog can be viewed and liked", function () {
+    it("a blog can be viewed and liked", function () {
       cy.get("#view").click();
       cy.contains("Likes: 0");
       cy.get("#likeBlogButton").click();
       cy.contains("Likes: 1");
+    });
+    it.only("a blog can be viewed and deleted", function () {
+      cy.get("#view").click();
+      cy.get("#deleteBlogButton").click();
+      cy.contains("Likes: 1").should("not.exist");
     });
   });
 });
