@@ -3,19 +3,23 @@ const BlogEntryForm = ({ onSubmit }) => (
     <form onSubmit={onSubmit}>
       <h2>create new</h2>
       <div>
-        title <input placeholder="title" />
+        title <input placeholder="title" id="titleEntry" />
       </div>
       <div>
-        author <input placeholder="author" />
+        author <input placeholder="author" id="authorEntry" />
       </div>
       <div>
-        url <input placeholder="url" />
+        url <input placeholder="url" id="urlEntry" />
       </div>
       <div>
-        likes <input placeholder="likes" />
+        likes <input placeholder="likes" id="likesEntry" />
       </div>
-      <button type="submit">create</button>
-      <button type="reset">reset</button>
+      <button type="submit" id="createEntryButton">
+        create
+      </button>
+      <button type="reset" id="resetEntryButton">
+        reset
+      </button>
     </form>
   </div>
 );
