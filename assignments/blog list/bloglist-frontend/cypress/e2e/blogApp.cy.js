@@ -33,8 +33,8 @@ describe("Blog app", function () {
       cy.get("#username").type("alexz648");
       cy.get("#password").type("alexz648");
       cy.get("#login-button").click();
-    });
-    it.only("a blog can be created", function () {
+
+      // create blog
       cy.get("#showBlogEntryButton").click();
       cy.get("#titleEntry").type("test title");
       cy.get("#authorEntry").type("test author");
@@ -43,6 +43,12 @@ describe("Blog app", function () {
       cy.get("#createEntryButton").click();
       cy.get("#resetEntryButton");
       cy.contains("test title");
+    });
+    it.only("a blog can be viewed and liked", function () {
+      cy.get("#view").click();
+      cy.contains("Likes: 0");
+      cy.get("#likeBlogButton").click();
+      cy.contains("Likes: 1");
     });
   });
 });

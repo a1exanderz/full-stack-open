@@ -62,9 +62,19 @@ const BlogList = ({ blogs, setBlogs, setErrorMessage }) => {
             <div>URL: {blog.url}</div>
             <div>
               Likes: {blog.likes}{" "}
-              <button onClick={() => handleLikeButton(blog.id)}>like</button>
+              <button
+                id="likeBlogButton"
+                onClick={() => handleLikeButton(blog.id)}
+              >
+                like
+              </button>
             </div>
-            <button onClick={() => handleDeleteButton(blog.id)}>delete</button>
+            <button
+              id="deleteBlogButton"
+              onClick={() => handleDeleteButton(blog.id)}
+            >
+              delete
+            </button>
           </div>
         </ToggleBlogView>
       ))}

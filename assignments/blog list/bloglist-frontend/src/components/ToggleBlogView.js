@@ -22,7 +22,10 @@ const ToggleBlogView = (props) => {
           }}
         >
           {props.children.props.children[0]}
-          <button onClick={toggleVisibility}> {props.buttonLabel}</button>
+          <button onClick={toggleVisibility} id="view">
+            {" "}
+            {props.buttonLabel}
+          </button>
         </div>
       </div>
       <div style={showWhenVisible}>
