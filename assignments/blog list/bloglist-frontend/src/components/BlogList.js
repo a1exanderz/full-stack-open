@@ -43,7 +43,11 @@ const BlogList = ({ blogs, setBlogs, setErrorMessage }) => {
         }}
       >
         <h2>blogs</h2>{" "}
-        <button onClick={() => sortByLikes()} style={{ height: "21.5px" }}>
+        <button
+          id="sortByLikesButton"
+          onClick={() => sortByLikes()}
+          style={{ height: "21.5px" }}
+        >
           sort by likes
         </button>
       </div>

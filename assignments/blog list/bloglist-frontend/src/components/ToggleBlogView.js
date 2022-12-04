@@ -20,9 +20,10 @@ const ToggleBlogView = (props) => {
             width: "300px",
             justifyContent: "space-between",
           }}
+          className="blogPreview"
         >
           {props.children.props.children[0]}
-          <button onClick={toggleVisibility} id="view">
+          <button onClick={toggleVisibility} id="viewBlog">
             {" "}
             {props.buttonLabel}
           </button>
