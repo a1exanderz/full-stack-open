@@ -17,6 +17,13 @@ const asObject = (anecdote) => {
   };
 };
 
+const sortByVotes = (state) => {
+  const sorted = state.sort((a, b) =>
+    a.votes > b.votes ? 1 : a.votes < b.votes ? -1 : 0
+  );
+  return sorted;
+};
+
 const initialState = anecdotesAtStart.map(asObject);
 
 const reducer = (state = initialState, action) => {
@@ -28,7 +35,8 @@ const reducer = (state = initialState, action) => {
         ...anecdoteToVote,
         votes: anecdoteToVote.votes + 1,
       };
-      return state.map((a) => (a.id !== id ? a : updatedAnecdote));
+      const newState = state.map((a) => (a.id !== id ? a : updatedAnecdote));
+      return sortByVotes(newState);
     case "NEW_ANECDOTE":
       return [...state, action.data];
     default:
