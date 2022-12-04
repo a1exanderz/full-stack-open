@@ -23,7 +23,8 @@ describe("Blog app", function () {
       cy.get("#username").type("alexz648");
       cy.get("#password").type("alexz647");
       cy.get("#login-button").click();
-      cy.contains("Wrong credentials");
+      cy.get(".error").should("contain", "Wrong credentials");
+      cy.get(".error").should("have.css", "color", "rgb(255, 0, 0)");
     });
   });
 });
