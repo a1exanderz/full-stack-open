@@ -17,4 +17,5 @@ const notificationSlice = createSlice({
 
 export const { displayVoteNotification, displayNewEntryNotification } =
   notificationSlice.actions;
+
 export default notificationSlice.reducer;
