@@ -5,8 +5,8 @@ import notificationReducer from "./reducers/notificationReducer";
 
 const store = configureStore({
   reducer: {
-    anecdotes: anecdoteReducer,
     notification: notificationReducer,
+    anecdotes: anecdoteReducer,
   },
 });
 
