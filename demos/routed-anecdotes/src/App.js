@@ -105,8 +105,6 @@ const CreateNew = (props) => {
     info.reset();
   };
 
-  console.log(content, author, info);
-
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -133,7 +131,7 @@ const CreateNew = (props) => {
         </div>
         <button type="submit">create</button>
         <button type="reset" onClick={() => handleReset()}>
-          reset
+          reset!
         </button>
       </form>
     </div>
