@@ -10,18 +10,17 @@ import Togglable from "./components/Togglable";
 
 import blogService from "./services/blogs";
 import loginService from "./services/login";
+import { createNewBlog } from "./reducers/blogReducer";
+import { useDispatch } from "react-redux";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
   const [notification, setNotification] = useState();
   const [errorMessage, setErrorMessage] = useState();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, []);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedInUser");
@@ -39,12 +38,10 @@ const App = () => {
       title: event.target[0].value,
       author: event.target[1].value,
       url: event.target[2].value,
-      likes: event.target[3].value,
+      likes: event.target[3].value ? event.target[3].value : 0,
     };
 
-    blogService.create(newBlogEntry).then((returnedEntry) => {
-      setBlogs(blogs.concat(returnedEntry));
-    });
+    dispatch(createNewBlog(newBlogEntry));
 
     setNotification(`added ${newBlogEntry.title}, by ${newBlogEntry.author}`);
     setTimeout(() => {
@@ -96,11 +93,7 @@ const App = () => {
             <button onClick={handleLogout}>log out</button>
           </p>
           <Notification message={notification} />
-          <BlogList
-            blogs={blogs}
-            setBlogs={setBlogs}
-            setErrorMessage={setErrorMessage}
-          />
+          <BlogList />
           <Togglable buttonLabel="create a new blog entry">
             <BlogEntryForm onSubmit={handleBlogEntry} />
           </Togglable>

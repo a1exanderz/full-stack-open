@@ -1,21 +1,10 @@
-// rfcreduxp command
+import { configureStore } from "@reduxjs/toolkit";
+import blogReducer from "./reducers/blogReducer";
 
-// template
+const store = configureStore({
+  reducer: {
+    blogs: blogReducer,
+  },
+});
 
-import PropTypes from "prop-types";
-import React from "react";
-import { connect } from "react-redux";
-
-export const store = (props) => {
-  return <div>store</div>;
-};
-
-store.propTypes = {
-  second: PropTypes.third,
-};
-
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(store);
+export default store;

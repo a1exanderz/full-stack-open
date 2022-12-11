@@ -1,35 +1,19 @@
+import { useDispatch, useSelector } from "react-redux";
 import ToggleBlogView from "./ToggleBlogView";
-import blogService from "../services/blogs";
 
-const BlogList = ({ blogs, setBlogs, setErrorMessage }) => {
-  const handleLikeButton = async (id) => {
-    const blog = blogs.find((blog) => blog.id === id);
-    const updatedBlog = { ...blog, likes: blog.likes + 1 };
-    const returnedBlog = await blogService.incrementLike(id, updatedBlog);
-    setBlogs(blogs.map((blog) => (blog.id !== id ? blog : returnedBlog)));
+import { deleteABlog, incrementLike } from "../reducers/blogReducer";
+
+const BlogList = () => {
+  const dispatch = useDispatch();
+
+  const blogs = useSelector((state) => state.blogs);
+
+  const handleLikeButton = (id) => {
+    dispatch(incrementLike(id));
   };
 
   const handleDeleteButton = async (id) => {
-    const blog = blogs.find((blog) => blog.id === id);
-    if (window.confirm(`Delete ${blog.title} by ${blog.author}?`)) {
-      try {
-        await blogService.deleteBlog(id);
-      } catch (exception) {
-        setErrorMessage("Cannot delete a note that isn't yours!");
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 5000);
-        return;
-      }
-      setBlogs(blogs.filter((blog) => blog.id !== id));
-    }
-  };
-
-  const sortByLikes = () => {
-    const sorted = blogs.sort((a, b) =>
-      a.likes > b.likes ? 1 : a.likes < b.likes ? -1 : 0
-    );
-    setBlogs([...sorted]);
+    dispatch(deleteABlog(id));
   };
 
   return (
@@ -43,13 +27,13 @@ const BlogList = ({ blogs, setBlogs, setErrorMessage }) => {
         }}
       >
         <h2>blogs</h2>{" "}
-        <button
+        {/* <button
           id="sortByLikesButton"
           onClick={() => sortByLikes()}
           style={{ height: "21.5px" }}
         >
           sort by likes
-        </button>
+        </button> */}
       </div>
       {blogs.map((blog) => (
         <ToggleBlogView buttonLabel="view" key={blog.id}>

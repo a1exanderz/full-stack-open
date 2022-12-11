@@ -7,9 +7,9 @@ const setToken = (newToken) => {
   token = `bearer ${newToken}`;
 };
 
-const getAll = () => {
-  const request = axios.get(baseUrl);
-  return request.then((response) => response.data);
+const getAll = async () => {
+  const response = await axios.get(baseUrl);
+  return response.data;
 };
 
 const create = async (newObject) => {
@@ -20,17 +20,22 @@ const create = async (newObject) => {
   return response.data;
 };
 
-const deleteBlog = async (id) => {
+const deleteBlog = (id) => {
   const config = {
     headers: { Authorization: token },
   };
 
-  const response = await axios.delete(`${baseUrl}/${id}`, config);
-  return response.data;
+  axios.delete(`${baseUrl}/${id}`, config);
+  return id;
 };
 
-const incrementLike = async (id, newObject) => {
-  const response = await axios.put(`${baseUrl}/${id}`, newObject);
+const incrementLike = async (id) => {
+  const object = await axios.get(`${baseUrl}/${id}`);
+  const updatedObject = {
+    ...object,
+    likes: object.data.likes + 1,
+  };
+  const response = await axios.put(`${baseUrl}/${id}`, updatedObject);
   return response.data;
 };
 
